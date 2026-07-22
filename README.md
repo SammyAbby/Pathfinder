@@ -1,6 +1,6 @@
 # Pathfinder — Version 1
 
-Pathfinder is a calm, local-first learning prototype for a New Zealand Year 8 learner. It contains ten 15-minute micro-sessions across reading, writing, and mathematics, plus a simple parent dashboard.
+Pathfinder is a calm, local-first learning prototype for a New Zealand Year 8 learner. Version 1.1 contains sixteen 15-minute micro-sessions across reading, writing, and mathematics, plus parent and teacher reporting.
 
 ## Run on a Mac mini
 
@@ -12,7 +12,7 @@ No account, cloud service, API key, package installation, or internet connection
 
 ## Included
 
-- ten fixed, curriculum-linked sessions;
+- sixteen fixed, curriculum-linked sessions: six reading, five writing, and five mathematics;
 - explicit teaching, guided practice, independent practice, and confidence checks;
 - immediate, specific feedback and optional read-aloud;
 - deterministic session progression and mastery decisions;

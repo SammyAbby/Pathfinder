@@ -16,10 +16,10 @@ Primary sources:
 
 English is organised around oral language, reading, and writing. Phase 3 emphasises explicit and systematic teaching, with vocabulary, morphology, syntax, fluency, text structure, writing processes, and comprehension continuing to develop in Years 7–8. Year-level texts should remain available to learners who need support; scaffolding, audio, and adjusted task complexity are preferable to replacing them with childish material.
 
-The selected reading sessions address locating and connecting evidence, identifying main ideas, inference, vocabulary in context, and judging claims. The selected writing sessions address complete and varied sentences, cohesive paragraph structure, precise vocabulary, evidence, and editing. These are a representative trial set, not full Phase 3 coverage.
+The selected reading sessions address locating and connecting evidence, identifying main ideas, inference, vocabulary through context and morphology, comparing perspectives, and judging claims. The selected writing sessions address complete and varied sentences, cohesive paragraph structure, precise vocabulary, audience and purpose, persuasive argument, evidence, and editing. These are a representative trial set, not full Phase 3 coverage.
 
-Mathematics and Statistics includes number, algebra, measurement, geometry, statistics, and probability. Year 8 expectations include decimals and powers of ten, rational-number connections, proportional reasoning, equations, measurement, statistical reasoning, and probability. The prototype samples number/place value, fractions-decimals-percentages, and one- and two-step equations. It does not claim complete mathematics coverage.
+Mathematics and Statistics includes number, algebra, measurement, geometry, statistics, and probability. Year 8 expectations include decimals and powers of ten, rational-number connections, proportional reasoning, equations, measurement, statistical reasoning, and probability. The prototype samples number/place value, fractions-decimals-percentages, ratios, one- and two-step equations, and statistical interpretation. It does not claim complete mathematics coverage.
 
 ## Boundary
 
-“Curriculum aligned” here means that each session is mapped to relevant knowledge and practices in the official sequences. It does not mean that ten sessions cover the Year 8 curriculum, that all learners should begin at the same point, or that the prototype is an assessment tool.
+“Curriculum aligned” here means that each session is mapped to relevant knowledge and practices in the official sequences. It does not mean that sixteen sessions cover the Year 8 curriculum, that all learners should begin at the same point, or that the prototype is an assessment tool.

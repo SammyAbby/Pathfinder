@@ -193,3 +193,108 @@ sessions.forEach(session => {
   session.curriculum = curriculumDetails[session.id];
   session.questions.push(...extensionQuestions[session.id]);
 });
+
+sessions.push(
+  {
+    id:"R5", subject:"Reading", title:"Unlock unfamiliar vocabulary", intention:"I can use context, roots, and affixes to work out unfamiliar words.",
+    teach:"Strong readers combine clues. Read around the word, identify a familiar root or affix, test a possible meaning, then reread the sentence to check it. A prefix comes before a root; a suffix comes after it.",
+    example:"In “The nocturnal kākāpō becomes active after sunset”, noct means night and the sentence mentions sunset. Nocturnal therefore means active at night.",
+    curriculum:{strand:"English — Reading",focus:"Year 8 vocabulary: academic terms, Greek and Latin roots and affixes, context, morphology, and reference tools",practice:"Uses context, roots, prefixes, and suffixes together to infer and verify unfamiliar vocabulary."},
+    questions:[
+      q("R5-1","Warm-up","What does the prefix pre– usually mean?",["before","against","under"],0,"Pre– usually means before, as in preview and prehistoric."),
+      q("R5-2","Warm-up","Which part is the root in “biodegradable”?",["bio","de","able"],0,"Bio is a Greek root meaning life."),
+      q("R5-3","Guided","In “The submarine descended below the surface”, what does sub– suggest?",["above","under","again"],1,"Sub– means under or below.","Connect submarine with subsoil or subway."),
+      q("R5-4","Guided","What does “portable” most likely mean in “The portable charger fitted easily into her pocket”?",["easy to carry","powered by water","difficult to replace"],0,"The pocket clue and the root idea of carrying support “easy to carry”.","Use both the sentence and what you know about portable devices."),
+      q("R5-5","Guided","The root spect means look. What is an inspection?",["a careful look or examination","a loud argument","a written prediction"],0,"The prefix in– plus spect relates to looking into or examining something.","Think of inspector and spectacles."),
+      q("R5-6","Independent","In “The seedlings were resilient; even after the storm flattened them, they stood upright the next day”, resilient means…",["able to recover","easy to damage","ready to flower"],0,"The plants recovered after being flattened."),
+      q("R5-7","Independent","What does inter– suggest in “interconnected wetlands”?",["between or among","without","small"],0,"Inter– means between or among; the wetlands are connected with one another."),
+      q("R5-8","Independent","If bio means life and diversity means variety, biodiversity means…",["the variety of living things","the study of rocks","a shortage of water"],0,"Combining the word parts gives variety of living things."),
+      q("R5-9","Independent","Which strategy best verifies an inferred meaning?",["Reread the sentence with the possible meaning, then check a reliable dictionary","Choose the longest definition","Ignore the rest of the paragraph"],0,"A contextual check followed by a reference check provides stronger confirmation."),
+      q("R5-10","Independent","In “The council introduced a temporary restriction, which would end after two weeks”, temporary means…",["lasting for a limited time","permanent","unexplained"],0,"The phrase “end after two weeks” directly confirms a limited duration.")]
+  },
+  {
+    id:"R6", subject:"Reading", title:"Compare perspectives", intention:"I can compare how two texts present the same issue.",
+    teach:"Texts can share a topic but differ in purpose, perspective, tone, and evidence. Compare what each includes, what it leaves out, and the words or features used to influence an audience.",
+    example:"A council notice calls a new path “a safer connection”. A shop owner calls the work “months of disruption”. Both discuss the same project from different interests and purposes.",
+    curriculum:{strand:"English — Reading",focus:"Year 8 critical analysis: comparing representations, perspectives, tone, purpose, and techniques across texts",practice:"Compares how two texts frame the same issue and supports the comparison with language and evidence."},
+    questions:[
+      q("R6-1","Warm-up","A perspective is…",["a position or way of viewing something","a spelling rule","a list of dates"],0,"A perspective reflects what a person or text notices, values, or believes."),
+      q("R6-2","Warm-up","Which word describes a neutral tone?",["measured","furious","celebratory"],0,"A measured tone is restrained and relatively neutral."),
+      q("R6-3","Guided","How does Text A frame the evening bus trial?",["As improved access","As wasted money","As a permanent solution"],0,"“Connect” and “access” frame the trial as a useful service.","Notice the benefits emphasised by the council.","Text A — Council update: “The six-month evening bus trial will connect shift workers and students with safer transport after 8 pm.”\n\nText B — Ratepayer newsletter: “The council is spending $180,000 on late buses before proving enough passengers will use them.”"),
+      q("R6-4","Guided","What concern does Text B emphasise?",["Cost and evidence of demand","Driver uniforms","Daytime traffic"],0,"Text B foregrounds the price and uncertainty about passenger numbers.","Look at the number and the phrase “before proving”."),
+      q("R6-5","Guided","Which comparison is best supported?",["Text A stresses access, while Text B questions value for money","Both texts celebrate the trial","Text B proves the buses will be empty"],0,"That comparison accurately captures each emphasis without overstating either text.","Choose a statement supported by both texts."),
+      q("R6-6","Independent","Which phrase in Text A is most positive?",["safer transport","six-month","after 8 pm"],0,"“Safer transport” presents an anticipated benefit."),
+      q("R6-7","Independent","Which phrase in Text B creates doubt?",["before proving enough passengers","the council","late buses"],0,"It suggests the decision may have been made without adequate evidence."),
+      q("R6-8","Independent","What information would help evaluate both perspectives?",["Passenger numbers, costs, and safety outcomes during the trial","The colour of the buses","The authors’ favourite subjects"],0,"Those data directly test the benefits and concerns raised."),
+      q("R6-9","Independent","Which perspective is missing from both texts?",["People who may use the evening service","The council and ratepayers","Bus manufacturers only"],0,"Neither text directly quotes or surveys the intended passengers."),
+      q("R6-10","Independent","Which conclusion is most responsible?",["The texts frame the trial differently; more outcome evidence is needed to judge it","Text A must be true because it is official","Text B must be true because it includes a number"],0,"Source and numbers matter, but neither alone settles the issue.")]
+  },
+  {
+    id:"W4", subject:"Writing", title:"Build a persuasive argument", intention:"I can support a clear position with reasons, evidence, and a respectful counter-argument.",
+    teach:"A persuasive argument states a position, organises reasons logically, supports them with relevant evidence, acknowledges an opposing view, and explains why the preferred position remains stronger.",
+    example:"Position: The library should open during lunch. Evidence: Last term’s trial averaged 28 visits a day. Counter-view: It requires supervision. Response: A rotating roster could provide this without adding one person’s workload.",
+    curriculum:{strand:"English — Writing",focus:"Year 8 writing to persuade: position, logical reasoning, trustworthy evidence, opposing views, and respectful rhetorical choices",practice:"Selects and sequences claims, evidence, counter-arguments, responses, and conclusions for a persuasive text."},
+    questions:[
+      q("W4-1","Warm-up","A persuasive position should…",["state what the writer wants the audience to accept or do","hide the main view","include every fact available"],0,"A clear position lets the audience understand the writer’s viewpoint."),
+      q("W4-2","Warm-up","Which source is strongest for a claim about road safety?",["Official local crash data across several years","An anonymous comment","A tyre advertisement"],0,"Relevant, transparent data are stronger than anecdotes or advertising."),
+      q("W4-3","Guided","Which is the clearest position?",["Our school should provide a sheltered scooter stand beside the main entrance","Scooters exist","Weather can change"],0,"It names both the proposed action and location.","Choose the statement a reader could agree or disagree with."),
+      q("W4-4","Guided","Which evidence best supports that position?",["A count found 47 scooters left exposed on three wet mornings","Some scooters are blue","The entrance has a sign"],0,"The repeated count directly shows the size and weather exposure of the need.","Select evidence relevant to shelter and demand."),
+      q("W4-5","Guided","Which response best addresses “A shelter would cost too much”?",["A student design and two local quotes could identify a modest, durable option","That view is ridiculous","Cost never matters"],0,"It treats the concern respectfully and proposes a practical way to test it.","A counter-argument should be answered, not insulted."),
+      q("W4-6","Independent","Which reason is distinct from the weather argument?",["Organised parking would keep the entrance path clearer","Rain makes seats wet","Shelters have roofs"],0,"Path access is a separate safety and organisation reason."),
+      q("W4-7","Independent","Which wording is compelling but respectful?",["A modest shelter would protect equipment and keep a busy path safer","Only an idiot would oppose this","This will solve every transport problem"],0,"It argues firmly without attacking people or exaggerating."),
+      q("W4-8","Independent","Where should the counter-argument normally appear?",["After the main case is clear and before the conclusion","Instead of stating a position","Only in the title"],0,"Readers need to understand the case before the writer weighs an alternative view."),
+      q("W4-9","Independent","Which conclusion is strongest?",["For these practical reasons, the school should seek quotes and trial a sheltered stand next term","Scooters are interesting","That is my argument and I am done"],0,"It restates the position and ends with a realistic next action."),
+      q("W4-10","Independent","Which plan is most logical?",["Position → reasons and evidence → counter-view and response → conclusion","Counter-view → unrelated story → title","Conclusion → evidence → hidden position"],0,"This structure builds and tests the argument before closing it.")]
+  },
+  {
+    id:"W5", subject:"Writing", title:"Choose words for effect", intention:"I can choose precise words and language features for an audience and purpose.",
+    teach:"Synonyms are not exact copies. Their tone, intensity, and associations differ. Effective writers choose words and features deliberately, then check whether they suit the audience, purpose, and intended effect.",
+    example:"“The stream moved” is neutral. “The stream trickled” suggests a small gentle flow; “surged” suggests force and speed. The best choice depends on what actually happened and the effect needed.",
+    curriculum:{strand:"English — Writing",focus:"Year 8 audience, purpose, and language choice: nuances of synonyms, tone, personal voice, and deliberate language features",practice:"Chooses precise vocabulary and rhetorical features to create an intended effect without distorting meaning."},
+    questions:[
+      q("W5-1","Warm-up","Which verb is most precise for looking briefly?",["glanced","observed","stared"],0,"A glance is a brief look."),
+      q("W5-2","Warm-up","Tone is…",["the attitude or feeling conveyed by language","the number of paragraphs","a spelling pattern"],0,"Tone is created through choices such as vocabulary, sentence shape, and detail."),
+      q("W5-3","Guided","Choose the best word: “After hours of heavy rain, water ___ through the culvert.”",["surged","wandered","whispered"],0,"“Surged” conveys forceful, fast movement.","Match the verb to heavy rain and a large flow."),
+      q("W5-4","Guided","Which sentence suits a formal council email?",["The crossing becomes difficult to see after dusk.","That crossing is super sketchy at night.","OMG, fix it!"],0,"It is specific, respectful, and appropriately formal.","Consider the audience and purpose."),
+      q("W5-5","Guided","Which feature adds emphasis without exaggeration?",["Parallel listing: safer for walkers, clearer for drivers, easier for cyclists","Everyone will certainly die","A random pun"],0,"The balanced list reinforces three relevant benefits.","Choose a feature that strengthens meaning responsibly."),
+      q("W5-6","Independent","Which synonym makes the strongest reasonable criticism?",["ineffective","imperfect","evil"],0,"“Ineffective” directly judges whether something works without making a moral accusation."),
+      q("W5-7","Independent","Which sentence creates a calm, reflective tone?",["By dusk, the last ripples settled against the jetty.","The water went totally wild!","Everything exploded with awesomeness."],0,"The precise image and measured rhythm create a reflective tone."),
+      q("W5-8","Independent","Which rhetorical question suits a speech about waste?",["Why send a repairable device to landfill?","What even is rubbish, lol?","Is every single person terrible?"],0,"It focuses attention on the issue without attacking the audience."),
+      q("W5-9","Independent","When is repetition effective?",["When it reinforces a key idea deliberately","Whenever the writer runs out of ideas","In every sentence"],0,"Purposeful repetition can create emphasis; accidental repetition weakens clarity."),
+      q("W5-10","Independent","Which revision is most precise?",["The nocturnal survey recorded seven pekapeka passes near the river","We saw some stuff there","There were heaps of bats everywhere"],0,"It states the method, number, animal, and location without exaggeration.")]
+  },
+  {
+    id:"M4", subject:"Maths", title:"Reason with ratios", intention:"I can divide quantities and solve problems using part-to-part and part-to-whole ratios.",
+    teach:"A ratio compares quantities multiplicatively. In 2:3, every group has 2 parts of the first quantity and 3 of the second—5 parts altogether. Equivalent ratios multiply or divide both parts by the same factor.",
+    example:"Red:blue = 2:3 and there are 25 counters. There are 5 total parts; 25 ÷ 5 = 5 per part. Red = 10 and blue = 15.",
+    curriculum:{strand:"Mathematics and Statistics — Number",focus:"Year 8 proportional reasoning: part-to-part and part-to-whole ratios and dividing quantities into two parts",practice:"Finds equivalent ratios, determines the value of one part, and solves ratio allocation problems."},
+    questions:[
+      q("M4-1","Warm-up","In the ratio 3:4, how many total parts are there?",["7","12","1"],0,"Three parts plus four parts gives seven total parts."),
+      q("M4-2","Warm-up","Which ratio is equivalent to 2:5?",["4:10","4:7","10:2"],0,"Multiplying both parts by 2 gives 4:10."),
+      q("M4-3","Guided","A drink uses juice:water = 1:3. How many cups of water go with 2 cups of juice?",["6","4","2"],0,"Doubling the juice requires doubling the water: 2:6.","Multiply both parts of 1:3 by 2."),
+      q("M4-4","Guided","A 30-student group is divided in the ratio 2:3. What is one part worth?",["5","6","10"],1,"There are 5 total parts, so 30 ÷ 5 = 6 per part.","Add the ratio parts, then divide the total."),
+      q("M4-5","Guided","Using 2:3 with 30 students, how many are in the larger group?",["12","18","20"],1,"The larger group has 3 parts: 3 × 6 = 18.","Use the value of one part from the previous question."),
+      q("M4-6","Independent","Blue:white tiles = 5:2. If there are 28 tiles, how many are blue?",["20","8","14"],0,"Seven total parts means 4 per part; 5 × 4 = 20 blue tiles."),
+      q("M4-7","Independent","A class has 12 cyclists and 18 walkers. Cyclists:walkers in simplest form is…",["2:3","3:2","12:30"],0,"Dividing both quantities by 6 gives 2:3."),
+      q("M4-8","Independent","If 3 out of every 8 seedlings are mānuka, the part-to-whole ratio is…",["3:8","3:5","5:8"],0,"Part-to-whole compares the 3 mānuka with all 8 seedlings."),
+      q("M4-9","Independent","A $72 prize is shared in the ratio 5:3. What is the larger share?",["$45","$27","$40"],0,"Eight parts means $9 per part; 5 × $9 = $45."),
+      q("M4-10","Independent","Which method preserves a ratio?",["Multiply or divide every part by the same non-zero number","Add 2 to every part","Change only the larger part"],0,"Equivalent ratios require the same multiplicative scale factor.")]
+  },
+  {
+    id:"M5", subject:"Maths", title:"Interpret data carefully", intention:"I can use centre, spread, and context to interpret data and notice misleading displays.",
+    teach:"The mean, median, and mode describe centre in different ways; the range describes spread. Outliers can pull the mean towards them, while the median is often more resistant. Always interpret numbers in context and check graph labels and scales.",
+    example:"Times: 10, 11, 11, 12, 46. Median = 11; mean = 18. The unusually high 46 pulls the mean upward, so the median better describes a typical time.",
+    curriculum:{strand:"Mathematics and Statistics — Statistics",focus:"Year 8 data interpretation: mean, median, mode, range, outliers, distribution, context, and potentially misleading visualisations",practice:"Calculates and selects summary measures, explains outlier effects, and checks visualisations for missing or distorted information."},
+    questions:[
+      q("M5-1","Warm-up","What is the median of 3, 5, 8, 9, 12?",["8","7.4","9"],0,"The sorted middle value is 8."),
+      q("M5-2","Warm-up","What is the range of 4, 7, 7, 13?",["9","7","3"],0,"Range = maximum − minimum = 13 − 4 = 9."),
+      q("M5-3","Guided","What is the mean of 6, 8, 10?",["8","10","24"],0,"The total is 24; 24 ÷ 3 = 8.","Add the values, then divide by how many values there are."),
+      q("M5-4","Guided","For 5, 6, 6, 7, 31, which measure best represents a typical value?",["Median 6","Mean 11","Range 26"],0,"The outlier 31 pulls the mean up; the median remains near most values.","Notice the value far from the cluster."),
+      q("M5-5","Guided","A graph comparing 98 and 100 starts its vertical axis at 97. What risk does this create?",["The small difference may look very large","The values become incorrect","The graph has no bars"],0,"A truncated scale can visually exaggerate a small difference.","Think about how tall the bars appear relative to the visible axis."),
+      q("M5-6","Independent","What is the mode of 2, 3, 3, 4, 4, 4, 8?",["4","3","8"],0,"Four occurs most frequently."),
+      q("M5-7","Independent","What is the median of 4, 6, 7, 9?",["6.5","7","26"],0,"With four values, average the middle two: (6 + 7) ÷ 2 = 6.5."),
+      q("M5-8","Independent","Which description includes context?",["Typical travel time was 14 minutes for the surveyed students","The median was 14","Fourteen is in the middle"],0,"It names the measure, variable, unit, and group."),
+      q("M5-9","Independent","Which missing feature makes a graph hardest to interpret?",["Axis labels and units","Decorative colour","A border"],0,"Without labels and units, viewers cannot identify what the values represent."),
+      q("M5-10","Independent","An outlier should always be deleted. Is this true?",["No; first investigate whether it is a valid rare value or an error","Yes; outliers are never real","Yes; they always lower the mean"],0,"Outliers may be errors or genuine unusual observations, so context matters.")]
+  }
+);

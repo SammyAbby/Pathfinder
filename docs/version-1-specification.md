@@ -1,9 +1,12 @@
 # Pathfinder Version 1 — product and educational specification
 
-**Version:** 1.0 prototype  
-**Date:** 22 July 2026  
-**Learner:** one New Zealand Year 8 learner, approximately age 12  
-**Device:** Apple-silicon Mac mini, used in Safari  
+**Version:** 1.1 prototype
+
+**Date:** 22 July 2026
+
+**Learner:** one New Zealand Year 8 learner, approximately age 12
+
+**Device:** Apple-silicon Mac mini, used in Safari
 
 ## 1. Product purpose
 
@@ -27,7 +30,7 @@ The first release tests whether the learner can use a predictable routine, under
 ### Included
 
 - one anonymous local learner profile;
-- ten fixed micro-sessions: four reading, three writing, three maths;
+- sixteen fixed micro-sessions: six reading, five writing, five maths;
 - one-question-at-a-time student experience;
 - optional browser text-to-speech;
 - hints in guided practice;
@@ -46,7 +49,7 @@ The first release tests whether the learner can use a predictable routine, under
 - claims of reading age, curriculum level, or learning diagnosis;
 - full Phase 3 coverage.
 
-## 4. Ten-session curriculum sample
+## 4. Sixteen-session curriculum sample
 
 | # | Area | Learning intention | Curriculum connection | Evidence captured |
 |---:|---|---|---|---|
@@ -60,6 +63,12 @@ The first release tests whether the learner can use a predictable routine, under
 | 8 | Maths | Form and solve one- and two-step equations | Year 8 algebra: equations, inverse operations, substitution | equation formation and solutions |
 | 9 | Writing | Edit punctuation, precision, and sentence boundaries | Revising and editing; syntax and vocabulary | editing decisions |
 | 10 | Reading | Judge a claim using evidence and source cues | Critical reading, perspective, reliability, evaluative language | claim/evidence judgement |
+| 11 | Reading | Use context, roots, and affixes to infer vocabulary | Academic vocabulary, morphology, word origins, reference strategies | meaning selection and verification |
+| 12 | Reading | Compare perspectives across two texts | Synthesis and critical analysis across texts | supported comparison of purpose, tone, and evidence |
+| 13 | Writing | Build a persuasive argument | Position, evidence, counter-argument, respectful rhetoric | argument structure and evidence choices |
+| 14 | Writing | Choose precise words for audience and effect | Nuances of synonyms, tone, voice, and language features | vocabulary and rhetorical choices |
+| 15 | Maths | Solve part-to-part and part-to-whole ratio problems | Year 8 proportional reasoning and ratio | equivalent ratio and allocation accuracy |
+| 16 | Maths | Interpret centre, spread, outliers, and graphs | Year 8 statistics and data visualisation | calculation and contextual interpretation |
 
 This is a deliberately balanced interaction trial, not a proposed order for teaching the whole year. After the trial, observed needs and school evidence should determine the next content.
 
@@ -99,7 +108,7 @@ Next-session recommendation:
 
 1. if the latest result is Revisit, recommend the same session once more;
 2. otherwise recommend the earliest uncompleted session;
-3. after all ten are complete, recommend the oldest Developing/Revisit session;
+3. after all sixteen are complete, recommend the oldest Developing/Revisit session;
 4. if all are Secure today, show that the trial set is complete and ask the parent to review results.
 
 The learner may choose any session; recommendations are guidance, not gates.
@@ -163,7 +172,7 @@ The prototype succeeds if:
 - progress remains after closing and reopening Safari;
 - the parent can explain what was practised and where support is needed;
 - no data leaves the device;
-- at least seven of ten sessions take 10–18 minutes in authentic use;
+- at least twelve of sixteen sessions take 10–18 minutes in authentic use;
 - the learner reports that the tone feels respectful and is willing to use it again.
 
 After the trial, capture confusion points, actual duration, reading/typing barriers, requested hints, emotional response, and any mismatch with current classroom work. Do not expand content until those findings are reviewed.
