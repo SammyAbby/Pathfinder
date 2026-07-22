@@ -175,6 +175,19 @@ When choices are shuffled, shuffle complete option objects and continue to deter
 - Allow the parent to copy a compact diagnostic containing the session ID, item ID and version, variation seed, displayed prompt and choices, and app version, without including unrelated learner history.
 - A flagged item should be excluded from mastery calculations until reviewed if the content is confirmed faulty; retain both the original result and the later invalidation decision for auditability.
 
+### Incremental attempt persistence
+
+Create and save an in-progress attempt before the first question is displayed. Update it atomically whenever an item is shown, an option is selected, an answer is checked, a hint or Read aloud is used, or the learner advances. Do not wait for the confidence check or session completion before writing the learner log.
+
+- Record the exact rendered snapshot of the current question and displayed option order as soon as it appears.
+- Preserve answered and unanswered displayed items when the learner closes the tab, navigates away, encounters an error, or chooses to stop.
+- Mark records explicitly as `in_progress`, `completed`, `abandoned`, or `invalidated`; never present an unfinished attempt as a completed learning result.
+- Offer **Resume session** from the learner welcome screen when a valid in-progress attempt exists.
+- Offer the parent a neutral **End this attempt** action that retains the audit record without scoring unattempted questions.
+- Include incomplete attempts in the detailed learner log, but exclude them from mastery, recommendation, and teacher-report performance calculations unless a future rule explicitly uses completed-item evidence and labels it appropriately.
+- Save a non-sensitive reason when an attempt ends because of an invalid question or application error.
+- Recover safely from a partially written record and retain the last valid state.
+
 ### Release gates and acceptance criteria
 
 - Automated integrity checks pass for every eligible question and every supported shuffle path before release.
@@ -185,6 +198,8 @@ When choices are shuffled, shuffle complete option objects and continue to deter
 - No flagged or retired item is served in a new session.
 - If a validation failure occurs at runtime, the item is not displayed; the app records a non-sensitive error and substitutes another validated item or safely ends the session without scoring the missing item.
 - A confirmed faulty item cannot lower a learner's status, trigger **Revisit**, or appear as evidence of a misconception.
+- Reloading or closing the app at every point in a test session retains every question already displayed and every response already checked.
+- An unfinished session appears in the detailed learner log immediately and can be resumed or deliberately ended without being mistaken for a completed attempt.
 
 ## Objective
 
