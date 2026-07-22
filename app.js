@@ -1,4 +1,5 @@
 import { sessions } from "./sessions.js";
+import { getCatalogQuestion, prepareSession } from "./question-engine.js";
 
 const STORAGE_KEY = "pathfinder-v1-progress";
 const app = document.querySelector("#app");
@@ -47,8 +48,9 @@ function renderSessions() {
 }
 
 function startSession(id) {
-  const session = sessions.find(s => s.id === id);
-  active = { session, index:0, answers:[], hints:new Set(), startedAt:Date.now(), selected:null, checked:false };
+  const sourceSession = sessions.find(s => s.id === id);
+  const prepared = prepareSession(sourceSession, loadAttempts());
+  active = { session:prepared.session, seed:prepared.seed, itemSetVersion:prepared.itemSetVersion, index:0, answers:[], hints:new Set(), startedAt:Date.now(), selected:null, checked:false };
   renderQuestion();
 }
 
@@ -75,7 +77,19 @@ function checkAnswer() {
   active.checked = true;
   const item = active.session.questions[active.index];
   const correct = active.selected === item.answer;
-  active.answers.push({ questionId:item.id, phase:item.phase, selected:active.selected, correct });
+  active.answers.push({
+    questionId:item.id,
+    phase:item.phase,
+    prompt:item.prompt,
+    passage:item.passage || "",
+    options:[...item.options],
+    selected:active.selected,
+    selectedText:item.options[active.selected],
+    correct,
+    correctText:item.options[item.answer],
+    feedback:item.feedback,
+    hintOpened:active.hints.has(item.id)
+  });
   document.querySelectorAll("[data-answer]").forEach(el => el.disabled=true);
   document.querySelector("[data-hint]")?.remove();
   const support = document.querySelector("#support");
@@ -111,7 +125,7 @@ function finishSession(confidence) {
   const secureScore = Math.ceil(active.answers.length * .85);
   const developingScore = Math.ceil(active.answers.length * .6);
   let status = totalCorrect < developingScore || confidence === "explain differently" ? "Revisit" : (totalCorrect >= secureScore && independentCorrect === independent.length && confidence === "ready" ? "Secure today" : "Developing");
-  const attempt = { sessionId:active.session.id, completedAt:new Date().toISOString(), totalCorrect, totalQuestions:active.answers.length, independentCorrect, independentQuestions:independent.length, hintsUsed:active.hints.size, confidence, durationSeconds:Math.max(1,Math.round((Date.now()-active.startedAt)/1000)), status, responses:active.answers };
+  const attempt = { schemaVersion:2, itemSetVersion:active.itemSetVersion, variationSeed:active.seed, sessionId:active.session.id, startedAt:new Date(active.startedAt).toISOString(), completedAt:new Date().toISOString(), totalCorrect, totalQuestions:active.answers.length, independentCorrect, independentQuestions:independent.length, hintsUsed:active.hints.size, confidence, durationSeconds:Math.max(1,Math.round((Date.now()-active.startedAt)/1000)), status, responses:active.answers };
   saveAttempts([...loadAttempts(),attempt]);
   const session = active.session;
   active=null;
@@ -124,7 +138,28 @@ function renderParent() {
   const attempts=loadAttempts();
   const totalMinutes=Math.round(attempts.reduce((sum,a)=>sum+a.durationSeconds,0)/60);
   const rows=[...attempts].reverse().map(a=>{const s=sessions.find(x=>x.id===a.sessionId);return `<tr><td>${new Date(a.completedAt).toLocaleDateString("en-NZ")}</td><td>${escapeHtml(s.title)}</td><td>${escapeHtml(a.status)}</td><td>${a.totalCorrect}/${a.totalQuestions}</td><td>${a.hintsUsed}</td><td>${escapeHtml(a.confidence)}</td><td>${Math.max(1,Math.round(a.durationSeconds/60))} min</td></tr>`}).join("");
-  app.innerHTML=`<section><p class="eyebrow">For the parent</p><h1>Progress, without guesswork.</h1><p class="lead">These results describe performance on this small question set. They are not a curriculum level or diagnosis.</p><div class="button-row"><button class="primary" data-route="teacher">Create teacher report</button></div><div class="metric-grid"><div class="card metric"><span>Sessions finished</span><strong>${attempts.length}</strong></div><div class="card metric"><span>Different skills tried</span><strong>${new Set(attempts.map(a=>a.sessionId)).size}/${sessions.length}</strong></div><div class="card metric"><span>Approx. learning time</span><strong>${totalMinutes} min</strong></div></div><div class="card"><h2>Attempt history</h2>${rows ? `<div class="table-wrap"><table><thead><tr><th>Date</th><th>Session</th><th>Status</th><th>Score</th><th>Hints</th><th>Confidence</th><th>Time</th></tr></thead><tbody>${rows}</tbody></table></div>` : `<p class="empty">No sessions completed yet.</p>`}</div><div class="card privacy"><h2>Privacy on this prototype</h2><p>Progress is stored only in this Safari profile on this Mac. There is no account, cloud sync, advertising, analytics, or chatbot. Anyone using this browser profile can open this view.</p><button class="danger" data-reset>Reset local progress</button></div></section>`;
+  app.innerHTML=`<section><p class="eyebrow">For the parent</p><h1>Progress, without guesswork.</h1><p class="lead">These results describe performance on this small question set. They are not a curriculum level or diagnosis.</p><div class="button-row"><button class="primary" data-route="teacher">Create teacher report</button><button class="secondary" data-route="learner-log">Detailed learner log</button></div><div class="metric-grid"><div class="card metric"><span>Sessions finished</span><strong>${attempts.length}</strong></div><div class="card metric"><span>Different skills tried</span><strong>${new Set(attempts.map(a=>a.sessionId)).size}/${sessions.length}</strong></div><div class="card metric"><span>Approx. learning time</span><strong>${totalMinutes} min</strong></div></div><div class="card"><h2>Attempt history</h2>${rows ? `<div class="table-wrap"><table><thead><tr><th>Date</th><th>Session</th><th>Status</th><th>Score</th><th>Hints</th><th>Confidence</th><th>Time</th></tr></thead><tbody>${rows}</tbody></table></div>` : `<p class="empty">No sessions completed yet.</p>`}</div><div class="card privacy"><h2>Privacy on this prototype</h2><p>Progress is stored only in this Safari profile on this Mac. There is no account, cloud sync, advertising, analytics, or chatbot. Anyone using this browser profile can open this view.</p><button class="danger" data-reset>Reset local progress</button></div></section>`;
+  focusMain();
+}
+
+function renderLearnerLog() {
+  active=null;
+  const attempts=[...loadAttempts()].reverse();
+  const attemptCards=attempts.map((attempt, attemptIndex) => {
+    const session=sessions.find(item => item.id === attempt.sessionId);
+    const responseRows=(attempt.responses || []).map((response, index) => {
+      const catalog=getCatalogQuestion(sessions,response.questionId);
+      const prompt=response.prompt || catalog?.prompt || `Historical question ${response.questionId}`;
+      const passage=response.passage || catalog?.passage || "";
+      const selectedText=response.selectedText || catalog?.options?.[response.selected] || `Option ${Number(response.selected)+1}`;
+      const correctText=response.correctText || catalog?.options?.[catalog?.answer] || "Not recorded in the historical attempt";
+      const feedback=response.feedback || catalog?.feedback || "Historical feedback not recorded";
+      const support=response.hintOpened === true ? "Hint opened" : response.hintOpened === false ? "No hint opened" : "Hint detail not recorded";
+      return `<article class="response-record"><div class="meta"><span class="pill">${index+1} · ${escapeHtml(response.phase || catalog?.phase || "Question")}</span><span class="status">${response.correct ? "Correct" : "Developing"}</span></div>${passage ? `<div class="passage">${escapeHtml(passage)}</div>` : ""}<h3>${escapeHtml(prompt)}</h3><dl class="response-details"><div><dt>Answer given</dt><dd>${escapeHtml(selectedText)}</dd></div><div><dt>Approved answer</dt><dd>${escapeHtml(correctText)}</dd></div><div><dt>Support</dt><dd>${escapeHtml(support)}</dd></div><div><dt>Feedback shown</dt><dd>${escapeHtml(feedback)}</dd></div></dl></article>`;
+    }).join("");
+    return `<details class="card attempt-record" ${attemptIndex===0 ? "open" : ""}><summary><strong>${escapeHtml(session?.title || attempt.sessionId)}</strong> — ${new Date(attempt.completedAt).toLocaleString("en-NZ")} — ${attempt.totalCorrect}/${attempt.totalQuestions} — ${escapeHtml(attempt.status)}</summary><div class="attempt-meta"><span>${Math.max(1,Math.round(attempt.durationSeconds/60))} min</span><span>${attempt.hintsUsed} hint${attempt.hintsUsed===1?"":"s"}</span><span>Confidence: ${escapeHtml(attempt.confidence)}</span><span>Item set: ${escapeHtml(attempt.itemSetVersion || "historical fixed set")}</span></div>${responseRows || `<p class="empty">Detailed responses were not recorded for this historical attempt.</p>`}</details>`;
+  }).join("");
+  app.innerHTML=`<section class="learner-log"><div class="button-row"><button class="secondary" data-route="parent">Back to parent view</button></div><p class="eyebrow">Parent investigation view</p><h1>Detailed learner log</h1><p class="lead">This audit view preserves the exact questions, answer choices, responses, support, and feedback from new attempts. It is intentionally separate from Sammy's learning screens and the everyday progress summary.</p>${attemptCards || `<div class="card"><p class="empty">No completed attempts to inspect yet.</p></div>`}<p class="privacy">Historical Version 1 attempts contain less detail because question snapshots were not recorded at the time. Missing information is labelled rather than inferred.</p></section>`;
   focusMain();
 }
 
@@ -142,7 +177,7 @@ function renderTeacherReport() {
 }
 
 function focusMain(){ app.focus({preventScroll:true}); window.scrollTo({top:0,behavior:"auto"}); }
-function route(name){ window.speechSynthesis?.cancel(); if(name==="sessions")renderSessions(); else if(name==="parent")renderParent(); else if(name==="teacher")renderTeacherReport(); else renderHome(); }
+function route(name){ window.speechSynthesis?.cancel(); if(name==="sessions")renderSessions(); else if(name==="parent")renderParent(); else if(name==="teacher")renderTeacherReport(); else if(name==="learner-log")renderLearnerLog(); else renderHome(); }
 
 document.addEventListener("click", e => {
   const routeButton=e.target.closest("[data-route]"); if(routeButton){route(routeButton.dataset.route);return;}

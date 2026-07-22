@@ -1,6 +1,6 @@
 # Pathfinder Version 1 — product and educational specification
 
-**Version:** 1.1 prototype
+**Version:** 1.1.1 prototype
 
 **Date:** 22 July 2026
 
@@ -35,10 +35,13 @@ The first release tests whether the learner can use a predictable routine, under
 - optional browser text-to-speech;
 - hints in guided practice;
 - immediate feedback;
+- curated supplementary question pools and shuffled answer positions;
+- preference for questions not used in the learner's latest attempt;
 - confidence check after each session;
 - local session records;
+- exact question, answer-choice, response, support, and feedback snapshots for new attempts;
 - deterministic recommended-next-session rule;
-- simple parent dashboard and progress reset.
+- simple parent dashboard, a separate detailed learner log, and progress reset.
 
 ### Excluded
 
@@ -158,7 +161,9 @@ The parent can inspect the visible history and erase all progress. Clearing Safa
 
 Version 1 is a dependency-free progressive web-style site: HTML, CSS, and JavaScript modules served locally. This removes package installation, cloud dependencies, and Apple-silicon compatibility risk. Safari supplies text-to-speech; `localStorage` supplies progress persistence.
 
-The content catalogue is separate from the interface. Every question has a stable ID, phase, prompt, options, answer, feedback, and optional hint. The deterministic engine calculates results and recommendations. No secret keys are present.
+The content catalogue is separate from the interface. Every question has a stable ID, phase, prompt, options, answer, feedback, and optional hint. Version 1.1.1 adds three curated supplementary items to each session, one in each learning phase. On every attempt, the engine selects two warm-ups, three guided items, and five independent items, preferring items not used in the most recent attempt. Answer positions are shuffled while the approved answer mapping is preserved. At least three different questions therefore appear on an immediate retry, and answer position alone cannot be memorised. The exact displayed item is stored with the response for audit. The deterministic engine calculates results and recommendations. No secret keys are present.
+
+The detailed learner log is accessible from Parent view, not from the student flow. It shows each completed attempt and, where recorded, the exact prompt, passage, answer given, approved answer, hint status, and feedback shown. Historical attempts remain readable; fields that were not captured at the time are labelled “not recorded” rather than inferred.
 
 A later production build could wrap the same learning model in SwiftUI or a signed web container and replace localStorage with SQLite. That decision should follow learner testing, not precede it.
 

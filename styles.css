@@ -57,6 +57,16 @@ th,td { padding:.8rem .55rem; border-bottom:1px solid var(--line); text-align:le
 .teacher-report .card { margin-top:1.2rem; }
 .report-meta { display:flex; gap:2rem; flex-wrap:wrap; margin:1.5rem 0; }
 .report-footer { color:var(--muted); font-size:.8rem; margin-top:2rem; }
+.attempt-record { margin-top:1rem; }
+.attempt-record summary { cursor:pointer; font-size:1rem; }
+.attempt-meta { display:flex; flex-wrap:wrap; gap:.6rem 1.2rem; margin:1.2rem 0; color:var(--muted); font-size:.85rem; }
+.response-record { border-top:1px solid var(--line); padding:1.3rem 0; }
+.response-record h3 { margin:.7rem 0; }
+.response-details { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.8rem; margin:0; }
+.response-details div { background:#f3f6f4; border-radius:10px; padding:.75rem; }
+.response-details dt { color:var(--muted); font-size:.78rem; font-weight:750; text-transform:uppercase; letter-spacing:.05em; }
+.response-details dd { margin:.25rem 0 0; }
 @media (max-width:650px) { .topbar { align-items:flex-start; gap:1rem; } nav { flex-direction:column; align-items:flex-end; } main { margin-top:1rem; } .mission { grid-template-columns:1fr; } .confidence { grid-template-columns:1fr; } }
+@media (max-width:650px) { .response-details { grid-template-columns:1fr; } }
 @media (prefers-reduced-motion:reduce) { * { scroll-behavior:auto!important; transition:none!important; } }
 @media print { body { background:white; font-size:11pt; } .topbar,footer,.report-actions { display:none!important; } main { width:100%; margin:0; } h1 { font-size:26pt; } .card { box-shadow:none; break-inside:avoid; padding:14px; } table { font-size:8.5pt; } .teacher-report { color:#111; } }

@@ -17,6 +17,11 @@
 - [ ] At least 85% total, every independent item correct, and “ready” gives Secure today.
 - [ ] A score below 60% gives Revisit.
 - [ ] Teacher report includes only completed curriculum focuses and prints cleanly to PDF.
+- [ ] An immediate retry contains at least three question IDs not used in the preceding attempt.
+- [ ] Answer choices appear in varying positions while the approved answer remains correct.
+- [ ] New attempts store the exact prompt, options, selected answer, approved answer, feedback, and hint status.
+- [ ] Detailed learner log is reached from Parent view and is absent from the student navigation.
+- [ ] Historical attempts display missing detail as “not recorded” rather than “no”.
 - [ ] “Explain differently” gives Revisit regardless of score.
 - [ ] Parent view shows attempt details and no child identity.
 - [ ] Reset requires confirmation and removes all attempts.
