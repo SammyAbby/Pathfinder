@@ -34,6 +34,37 @@ Add a calm learner-facing landing screen before the next session begins. Its pur
 - The main action and essential summary remain usable at 200% text size and on a narrow mobile screen.
 - Date and elapsed-time wording uses the device's New Zealand-local date and handles same-day, yesterday, and longer gaps naturally.
 
+## Performance-aware session sequencing
+
+Replace the simple fixed-list progression with a transparent sequencing engine that balances curriculum order, prerequisite readiness, subject variety, spaced review, and the learner's recent evidence. Selection must be deterministic and explainable rather than random.
+
+### Proposed priority order
+
+1. A session needing immediate reteaching when the learner selected **Explain it differently** or the evidence shows a foundational misunderstanding.
+2. A previously taught skill whose scheduled review is due.
+3. The next unattempted skill whose prerequisites are sufficiently secure.
+4. A developing skill that would benefit from another varied item set.
+5. A new curriculum skill, while avoiding unnecessary runs of the same subject.
+
+### Behaviour and safeguards
+
+- Keep explicit prerequisite links between skills; subject rotation must never advance past an unmet prerequisite merely to create variety.
+- Normally rotate Reading, Writing, and Maths across days, but allow educational need to override the rotation.
+- Avoid repeating a session immediately unless reteaching is genuinely indicated; when it is repeated, use a different approved item set and explanation where available.
+- Schedule later retrieval of skills marked **Secure today** before treating them as durably secure.
+- Show the parent why a session was selected, such as “next in sequence”, “review due”, or “revisit after difficulty”.
+- Let the learner choose another available session without corrupting the recommended sequence.
+- Do not use an opaque score, unrestricted AI choice, or random subject selection to determine the learning path.
+
+### Acceptance criteria
+
+- The same learner history always produces the same recommendation and a human-readable reason.
+- No new skill is recommended while a required prerequisite remains unready.
+- A due review takes priority over unrelated new content unless an immediate reteaching need exists.
+- Subject variety is maintained across suitable new sessions without weakening curriculum progression.
+- Manual session choices are recorded and the next recommendation recalculates correctly.
+- Historical Version 1 attempts remain usable, with unavailable sequencing evidence treated as unknown rather than negative.
+
 ## Objective
 
 Give Sammy's teacher a concise, academically useful account of what was taught, what Sammy demonstrated independently, what support she used, and what should be considered next. The report must remain formative and must not claim a curriculum level, diagnosis, or durable mastery from a small set of questions.
