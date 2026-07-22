@@ -1,6 +1,38 @@
-# Version 1.2 backlog — teacher reporting
+# Version 1.2 backlog — reporting and learner experience
 
 **Status:** Planned; do not implement until the Version 1.1 family trial has been reviewed.
+
+## Learner welcome screen
+
+Add a calm learner-facing landing screen before the next session begins. Its purpose is to help the learner reorient, recognise recent progress, and choose when to start instead of being placed directly into a question.
+
+### Proposed content
+
+- A short, age-respectful welcome using the learner's locally stored display name.
+- A neutral time-away message, such as “Welcome back — it has been 3 days since your last session.”
+- A summary of the most recently completed session: subject, learning intention, completion date, and one specific success or next step supported by recorded evidence.
+- A clear preview of today's proposed session: subject, learning goal, and approximate duration.
+- One prominent **Start today's session** button.
+- Secondary access to progress and accessibility controls without crowding the screen.
+
+### Behaviour and safeguards
+
+- On first use, show a simple introduction to Pathfinder and explain the predictable 15-minute session structure instead of referring to a previous session.
+- Calculate “last session” from the most recent completed attempt, not merely the last time the page was opened.
+- Do not use guilt, urgency, lost-streak language, or negative colouring after a long absence.
+- Do not expose marks, incorrect answers, parent notes, or the detailed learner log on this screen.
+- Phrase recent progress cautiously; do not call a skill “mastered” unless the full mastery rule has been met.
+- Continue to work locally and offline, without an account or learner email address.
+- Ensure the layout works on Mac and iPhone-sized screens and remains keyboard and screen-reader accessible.
+
+### Acceptance criteria
+
+- Returning learners see an accurate summary of their most recently completed session and the elapsed time since it was completed.
+- New learners see an introduction that does not contain empty or invented history.
+- An interrupted or incomplete attempt is described accurately and can be resumed when resume support is implemented.
+- The next learning activity does not begin until the learner presses the start button.
+- The main action and essential summary remain usable at 200% text size and on a narrow mobile screen.
+- Date and elapsed-time wording uses the device's New Zealand-local date and handles same-day, yesterday, and longer gaps naturally.
 
 ## Objective
 
