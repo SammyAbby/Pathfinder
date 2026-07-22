@@ -1,6 +1,6 @@
-# Pathfinder — Version 1
+# Pathfinder — Version 1.2
 
-Pathfinder is a calm, local-first learning prototype for a New Zealand Year 8 learner. Version 1.1.1 contains sixteen 15-minute micro-sessions across reading, writing, and mathematics, plus parent and teacher reporting.
+Pathfinder is a calm, local-first learning prototype for a New Zealand Year 8 learner. Version 1.2 contains sixteen 15-minute micro-sessions across reading, writing, and mathematics, plus parent, investigation, and teacher reporting.
 
 ## Run on a Mac mini
 
@@ -15,9 +15,11 @@ No account, cloud service, API key, package installation, or internet connection
 - sixteen fixed, curriculum-linked sessions: six reading, five writing, and five mathematics;
 - explicit teaching, guided practice, independent practice, and confidence checks;
 - immediate, specific feedback and optional read-aloud;
-- controlled question variation with curated supplementary items and shuffled answer positions;
-- deterministic session progression and mastery decisions;
-- local-only progress history;
+- validated question bundles with curated supplementary items, stable answer IDs, and safely shuffled answer positions;
+- deterministic curriculum- and prerequisite-aware session recommendations with human-readable reasons;
+- a learner welcome screen with last-session context, next-step preview, and neutral time-away wording;
+- continuously saved local progress, interrupted-session recovery, and resume support;
+- parent-only item flagging and exact versioned evidence in the detailed learner log;
 - student, parent, teacher-report, and detailed learner-log views;
 - keyboard-friendly, reduced-motion-aware interface.
 
@@ -26,13 +28,13 @@ No account, cloud service, API key, package installation, or internet connection
 - [Version 1 product and educational specification](docs/version-1-specification.md)
 - [Curriculum verification notes](docs/curriculum-verification.md)
 - [Manual test checklist](docs/test-checklist.md)
-- [Version 1.2 reporting and learner-experience backlog](docs/version-1.2-teacher-report-backlog.md)
+- [Version 1.2 design record and remaining backlog](docs/version-1.2-teacher-report-backlog.md)
 
 This prototype supports practice at home. It does not diagnose learning needs, replace a teacher, or represent Ministry of Education endorsement.
 
 ## Phase 3 curriculum skills tree and current coverage
 
-This living map records where Version 1.1 currently samples the official New Zealand Curriculum Phase 3 (Years 7–8), and where later Pathfinder sessions are still required. It is organised from the Ministry's [English Phase 3](https://newzealandcurriculum.tahurangi.education.govt.nz/nzc---english-phase-3-years-7-8/5637290836.p) and [Mathematics and Statistics Phase 3](https://newzealandcurriculum.tahurangi.education.govt.nz/nzc---mathematics-and-statistics-phase-3/5637289333.p) knowledge and practice sequences.
+This living map records where Version 1.2 currently samples the official New Zealand Curriculum Phase 3 (Years 7–8), and where later Pathfinder sessions are still required. It is organised from the Ministry's [English Phase 3](https://newzealandcurriculum.tahurangi.education.govt.nz/nzc---english-phase-3-years-7-8/5637290836.p) and [Mathematics and Statistics Phase 3](https://newzealandcurriculum.tahurangi.education.govt.nz/nzc---mathematics-and-statistics-phase-3/5637289333.p) knowledge and practice sequences.
 
 Coverage status:
 

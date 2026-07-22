@@ -1,6 +1,6 @@
 # Version 1.2 backlog — reporting and learner experience
 
-**Status:** Planned; do not implement until the Version 1.1 family trial has been reviewed.
+**Status:** Version 1.2 core implemented on 22 July 2026. This document remains the design record; items needing teacher review, richer misconception tagging, parent observations, and broader curriculum content remain future work.
 
 ## Learner welcome screen
 

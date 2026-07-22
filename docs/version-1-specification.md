@@ -1,6 +1,6 @@
 # Pathfinder Version 1 — product and educational specification
 
-**Version:** 1.1.1 prototype
+**Version:** 1.2.0 prototype
 
 **Date:** 22 July 2026
 
@@ -35,13 +35,16 @@ The first release tests whether the learner can use a predictable routine, under
 - optional browser text-to-speech;
 - hints in guided practice;
 - immediate feedback;
-- curated supplementary question pools and shuffled answer positions;
-- preference for questions not used in the learner's latest attempt;
+- validated, versioned question bundles with stable option identifiers;
+- curated standalone variation that never separates a follow-up from its authored context;
+- safely shuffled answer positions with deterministic integrity checks;
 - confidence check after each session;
-- local session records;
+- incrementally saved local session records, including interrupted and abandoned attempts;
+- resumable in-progress sessions;
 - exact question, answer-choice, response, support, and feedback snapshots for new attempts;
-- deterministic recommended-next-session rule;
-- simple parent dashboard, a separate detailed learner log, and progress reset.
+- deterministic prerequisite-, review-, and subject-aware recommended-next-session rules with visible reasons;
+- a returning-learner welcome screen with last-session and next-step summaries;
+- simple parent dashboard, item flagging, a separate detailed learner log, teacher report, and progress reset.
 
 ### Excluded
 
