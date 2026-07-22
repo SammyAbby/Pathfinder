@@ -65,6 +65,70 @@ Replace the simple fixed-list progression with a transparent sequencing engine t
 - Manual session choices are recorded and the next recommendation recalculates correctly.
 - Historical Version 1 attempts remain usable, with unavailable sequencing evidence treated as unknown rather than negative.
 
+## Curriculum dependency graph
+
+Convert the documented Phase 3 curriculum skills tree into a machine-readable dependency graph. The graph must preserve the Ministry's Year 7 and Year 8 teaching sequence while also recording the prerequisite relationships needed to make safe individual recommendations.
+
+Do not represent the curriculum as one rigid ladder. Mathematics contains several connected progressions, while English includes mutually reinforcing strands such as vocabulary, fluency, comprehension, text analysis, sentence construction, composition, and editing that may develop in parallel.
+
+### Required skill metadata
+
+Each micro-skill should record:
+
+```text
+skillId
+subject
+strand
+curriculumPhase
+curriculumYear
+officialCurriculumStatement
+officialSource
+directPrerequisiteIds[]
+supportingSkillIds[]
+dependentSkillIds[]
+recommendedReviewIntervals[]
+readinessRule
+masteryRule
+currentSessionIds[]
+coverageStatus
+```
+
+`coverageStatus` must distinguish **targeted**, **sampled**, and **gap**, using the same cautious definitions as the curriculum tree in the README.
+
+### Initial mathematics progression families
+
+- Place value and powers of ten → fraction equivalence → fraction, decimal, and percentage conversion → operations → proportional reasoning → ratios → percentage change and financial applications.
+- Multiplication and divisibility → factors and multiples → primes → HCF and LCM → fraction simplification and common denominators.
+- Equality and inverse operations → variables → substitution → one- and two-step equations → rational equations and inequalities → rearranging, simplifying, and factorising expressions → linear patterns and graphs.
+- Units and conversion → perimeter, area, and volume → formulae → unknown measures → composite shapes and prisms.
+- Angle and shape properties → coordinates and transformations → parallel-line relationships → unknown-angle equations → polygon angle generalisation.
+- Statistical questions and variables → data collection → centre and spread → visualisation → outliers and distribution shape → contextual interpretation → evaluation of claims and misleading displays.
+
+### Initial English progression families
+
+- Accurate access, fluency, vocabulary, morphology, and sentence comprehension provide continuing support for all reading pathways.
+- Explicit information → topic and main idea → relevant evidence → supported inference → language and structure analysis → comparison of perspectives → source and claim evaluation → synthesis across texts.
+- Sentence completeness and grammar → clause and punctuation control → paragraph structure → cohesion → purpose and audience → complete text structures → evidence and source use → revision, editing, and publishing.
+- Persuasive writing progresses from a stated position and relevant reasons to trustworthy evidence, logical organisation, acknowledgement of opposing positions, respectful rebuttal, rhetorical choices, and a strong conclusion.
+
+### Rules and safeguards
+
+- Label every relationship as either directly stated by the official sequence or a Pathfinder pedagogical dependency inferred from that sequence.
+- Preserve links to the exact Ministry source and curriculum statement so the model can be audited when curriculum documents change.
+- Use a short diagnostic or prerequisite review when historical evidence is absent; do not assume readiness solely from age or year level.
+- Provide access to age-appropriate, year-level ideas and texts while scaffolding an earlier underlying skill.
+- Allow teachers and parents to see the pathway and reason for a recommendation without exposing a complex dependency diagram in the learner experience.
+- Never equate completion of a short session with coverage of an entire curriculum statement.
+
+### Acceptance criteria
+
+- Every Version 1.2 session maps to at least one curriculum node and identifies any direct prerequisites.
+- The system detects circular, missing, and invalid dependency references during development.
+- A learner cannot be advanced to a dependent skill solely because an unrelated skill was secure.
+- Parallel English support strands can be scheduled without unnecessarily blocking comprehension and composition work.
+- Every recommendation can identify its curriculum node, prerequisite evidence, and next dependent skill.
+- The README coverage tree can be generated or checked against the graph so documentation and application data do not silently diverge.
+
 ## Objective
 
 Give Sammy's teacher a concise, academically useful account of what was taught, what Sammy demonstrated independently, what support she used, and what should be considered next. The report must remain formative and must not claim a curriculum level, diagnosis, or durable mastery from a small set of questions.
