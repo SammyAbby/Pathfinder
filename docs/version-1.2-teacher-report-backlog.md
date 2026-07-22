@@ -129,6 +129,63 @@ coverageStatus
 - Every recommendation can identify its curriculum node, prerequisite evidence, and next dependent skill.
 - The README coverage tree can be generated or checked against the graph so documentation and application data do not silently diverge.
 
+## Question and answer integrity
+
+Treat every question, its context or passage, answer choices, approved answer, explanation, hint, misconception tags, and curriculum link as one inseparable versioned learning item. Variation must never assemble these fields independently or allow an answer key to refer to the position an option occupied before shuffling.
+
+### Item model
+
+Use stable identifiers rather than array positions:
+
+```text
+itemId
+itemVersion
+skillId
+phase
+prompt
+contextOrPassage
+options[{ optionId, text, misconceptionTag }]
+correctOptionId
+hint
+feedbackByOptionId
+workedReason
+curriculumStatementId
+reviewStatus
+```
+
+When choices are shuffled, shuffle complete option objects and continue to determine correctness from `correctOptionId`. Never store or transmit correctness as only “answer 0”, “answer 1”, or another mutable display index.
+
+### Validation pipeline
+
+- Reject duplicate item IDs, duplicate option IDs, blank prompts, missing choices, missing approved answers, and correct-option IDs that do not exist in the item.
+- Confirm that every multiple-choice item has exactly one approved answer unless it is explicitly designed and rendered as multi-select.
+- Exercise every curated item under many deterministic shuffle seeds and verify that the same approved option remains correct after every permutation.
+- Verify that the snapshot stored in the learner log exactly matches what was rendered, including the displayed option order and selected option ID.
+- For generated numerical variants, calculate the approved answer independently in code and enforce domain constraints such as non-zero denominators, intended difficulty, sensible units, and unambiguous rounding.
+- For generated language variants, keep the passage, prompt, choices, answer, and explanations in one approved bundle. Do not combine a prompt from one template with options from another.
+- Check that each distractor is plausible but demonstrably incorrect and that its feedback explains the actual misconception represented.
+- Run curriculum mapping, reading-level, ambiguity, grammar, cultural-context, and age-appropriateness review before an item becomes eligible for learner use.
+- Maintain a human-review state: `draft`, `validated`, `teacher-reviewed`, or `retired`. Learners may receive only validated or teacher-reviewed items.
+- Retire faulty item versions without rewriting historical attempts; the learner log must retain the exact version Sammy actually saw.
+
+### In-app investigation and reporting
+
+- Display the item ID and version in the detailed learner log, not in the ordinary learner or parent view.
+- Add a parent-only **Flag this item** action that records a reason such as “answers do not match”, “more than one answer may be correct”, “unclear wording”, or an optional note.
+- Allow the parent to copy a compact diagnostic containing the session ID, item ID and version, variation seed, displayed prompt and choices, and app version, without including unrelated learner history.
+- A flagged item should be excluded from mastery calculations until reviewed if the content is confirmed faulty; retain both the original result and the later invalidation decision for auditability.
+
+### Release gates and acceptance criteria
+
+- Automated integrity checks pass for every eligible question and every supported shuffle path before release.
+- Tests deliberately alter an answer mapping and prove that the release check fails.
+- Tests verify that two item bundles cannot be accidentally cross-combined.
+- All generated mathematics variants are solved and checked by independent deterministic code.
+- A representative sample of reading and writing items receives human educational review, with all new template families reviewed before release.
+- No flagged or retired item is served in a new session.
+- If a validation failure occurs at runtime, the item is not displayed; the app records a non-sensitive error and substitutes another validated item or safely ends the session without scoring the missing item.
+- A confirmed faulty item cannot lower a learner's status, trigger **Revisit**, or appear as evidence of a misconception.
+
 ## Objective
 
 Give Sammy's teacher a concise, academically useful account of what was taught, what Sammy demonstrated independently, what support she used, and what should be considered next. The report must remain formative and must not claim a curriculum level, diagnosis, or durable mastery from a small set of questions.
