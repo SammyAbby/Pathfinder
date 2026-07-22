@@ -25,5 +25,6 @@ No account, cloud service, API key, package installation, or internet connection
 - [Version 1 product and educational specification](docs/version-1-specification.md)
 - [Curriculum verification notes](docs/curriculum-verification.md)
 - [Manual test checklist](docs/test-checklist.md)
+- [Version 1.2 teacher-report backlog](docs/version-1.2-teacher-report-backlog.md)
 
 This prototype supports practice at home. It does not diagnose learning needs, replace a teacher, or represent Ministry of Education endorsement.
