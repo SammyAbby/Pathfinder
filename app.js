@@ -1,5 +1,6 @@
 import { sessions } from "./sessions.js";
 import { getCatalogQuestion, prepareSession } from "./question-engine.js";
+import { confettiBurst, burstAt, celebrate, chime, toggleSound, isSoundOn, initAmbient } from "./celebrations.js";
 
 const STORAGE_KEY = "pathfinder-v1-progress";
 const app = document.querySelector("#app");
@@ -36,7 +37,7 @@ function renderHome() {
   const attempts = loadAttempts();
   const completed = new Set(attempts.map(a => a.sessionId)).size;
   app.innerHTML = `<section><p class="eyebrow">One clear step at a time</p><h1>Learning that meets you where you are.</h1><p class="lead">A calm 15-minute session with teaching, practice, and useful feedback. No timer. No streak pressure.</p>
-  ${next ? `<div class="card mission"><div><span class="pill">Today’s step · ${escapeHtml(next.subject)}</span><h2>${escapeHtml(next.title)}</h2><p>${escapeHtml(next.intention)}</p><p class="status">${completed} of ${sessions.length} sessions explored</p></div><button class="primary" data-start="${next.id}">Start session</button></div>` : `<div class="card mission"><div><span class="pill">Trial set complete</span><h2>Every session is secure today.</h2><p>Ask a parent to review the results before adding new learning.</p></div><button class="primary" data-route="parent">View progress</button></div>`}
+  ${next ? `<div class="card mission"><div><span class="pill">Today’s step · ${escapeHtml(next.subject)}</span><h2><span class="mascot" aria-hidden="true">🧭</span> ${escapeHtml(next.title)}</h2><p>${escapeHtml(next.intention)}</p><p class="status">${completed} of ${sessions.length} sessions explored</p></div><button class="primary" data-start="${next.id}">Start session</button></div>` : `<div class="card mission"><div><span class="pill">Trial set complete</span><h2><span class="mascot" aria-hidden="true">🏆</span> Every session is secure today.</h2><p>Ask a parent to review the results before adding new learning.</p></div><button class="primary" data-route="parent">View progress</button></div>`}
   <p class="privacy">Your progress stays in this browser on this Mac.</p></section>`;
   focusMain();
 }
@@ -60,7 +61,7 @@ function renderQuestion() {
   const total = session.questions.length;
   const showTeaching = index === 2;
   active.selected = null; active.checked = false;
-  app.innerHTML = `<section class="lesson-shell"><div class="lesson-top"><div><span class="pill">${escapeHtml(session.subject)}</span> <span class="status">${escapeHtml(item.phase)}</span></div><button class="secondary" data-speak-button>Read aloud</button></div><div class="progress-track" aria-label="Session progress"><div class="progress-fill" style="width:${Math.round((index/total)*100)}%"></div></div>
+  app.innerHTML = `<section class="lesson-shell"><div class="lesson-top"><div><span class="pill">${escapeHtml(session.subject)}</span> <span class="status">${escapeHtml(item.phase)}</span></div><button class="secondary" data-speak-button>Read aloud</button></div><div class="progress-track" aria-label="Session progress"><div class="progress-fill" style="width:${Math.round((index/total)*100)}%"><span class="progress-rocket" aria-hidden="true">🚀</span></div></div>
   <div class="card" data-speak><p class="eyebrow">${escapeHtml(session.intention)}</p>${showTeaching ? `<h2>Learn</h2><p>${escapeHtml(session.teach)}</p><div class="example">${escapeHtml(session.example)}</div><hr>` : ""}<h2>${escapeHtml(item.phase)}</h2>${item.passage ? `<div class="passage">${escapeHtml(item.passage)}</div>` : ""}<p class="question-text">${escapeHtml(item.prompt)}</p><div class="answers" role="radiogroup" aria-label="Answer choices">${item.options.map((o,i)=>`<button class="answer" role="radio" aria-checked="false" data-answer="${i}">${escapeHtml(o)}</button>`).join("")}</div><div id="support" aria-live="polite"></div><div class="button-row">${item.phase === "Guided" && item.hint ? `<button class="secondary" data-hint>Show a hint</button>` : ""}<button class="primary" data-check disabled>Check answer</button></div></div><p class="privacy">Question ${index+1} of ${total}</p></section>`;
   focusMain();
 }
@@ -70,6 +71,7 @@ function selectAnswer(index) {
   active.selected = Number(index);
   document.querySelectorAll("[data-answer]").forEach((el,i) => { const on=i===active.selected; el.classList.toggle("selected",on); el.setAttribute("aria-checked",String(on)); });
   document.querySelector("[data-check]").disabled = false;
+  chime("select");
 }
 
 function checkAnswer() {
@@ -90,10 +92,15 @@ function checkAnswer() {
     feedback:item.feedback,
     hintOpened:active.hints.has(item.id)
   });
-  document.querySelectorAll("[data-answer]").forEach(el => el.disabled=true);
+  const answerEls = document.querySelectorAll("[data-answer]");
+  answerEls.forEach(el => el.disabled=true);
+  answerEls[item.answer]?.classList.add("right-glow");
+  if (!correct) answerEls[active.selected]?.classList.add("wrong-shake");
   document.querySelector("[data-hint]")?.remove();
   const support = document.querySelector("#support");
-  support.innerHTML = `<div class="feedback"><strong>${correct ? "That works." : "Not quite yet."}</strong> ${escapeHtml(item.feedback)}</div>`;
+  support.innerHTML = `<div class="feedback feedback--${correct ? "correct" : "incorrect"}"><strong>${correct ? "That works." : "Not quite yet."}</strong> ${escapeHtml(item.feedback)}</div>`;
+  if (correct) { chime("correct"); burstAt(support.querySelector(".feedback"), { count: 22 }); }
+  else { chime("wrong"); }
   const button = document.querySelector("[data-check]");
   button.textContent = active.index === active.session.questions.length-1 ? "Confidence check" : "Continue";
   button.disabled=false;
@@ -129,8 +136,12 @@ function finishSession(confidence) {
   saveAttempts([...loadAttempts(),attempt]);
   const session = active.session;
   active=null;
-  app.innerHTML = `<section class="lesson-shell"><div class="card"><p class="eyebrow">Session complete</p><h1>${escapeHtml(status)}</h1><p class="lead">You practised: ${escapeHtml(session.intention.replace("I can ",""))}</p><div class="metric-grid"><div class="metric"><span>Questions</span><strong>${totalCorrect}/${attempt.totalQuestions}</strong></div><div class="metric"><span>Independent</span><strong>${independentCorrect}/${independent.length}</strong></div><div class="metric"><span>Hints</span><strong>${attempt.hintsUsed}</strong></div></div><p>${status === "Revisit" ? "This idea needs another explanation and another try. That is useful information, not a failure." : status === "Developing" ? "The idea is taking shape. A later review will help it stick." : "The skill was secure in today’s questions. A later review is still needed for durable mastery."}</p><div class="button-row"><button class="primary" data-route="home">See next step</button><button class="secondary" data-route="parent">Parent view</button></div></div></section>`;
+  const starCount = status === "Secure today" ? 5 : status === "Developing" ? 3 : 0;
+  const celebration = starCount ? `<div class="win-stars" aria-label="${starCount} stars">${"<span class=\"win-star\">⭐</span>".repeat(starCount)}</div>` : `<div class="win-stars" aria-hidden="true"><span class="win-star">🌱</span></div>`;
+  app.innerHTML = `<section class="lesson-shell"><div class="card"><p class="eyebrow">Session complete</p>${celebration}<h1>${escapeHtml(status)}</h1><p class="lead">You practised: ${escapeHtml(session.intention.replace("I can ",""))}</p><div class="metric-grid"><div class="metric"><span>Questions</span><strong>${totalCorrect}/${attempt.totalQuestions}</strong></div><div class="metric"><span>Independent</span><strong>${independentCorrect}/${independent.length}</strong></div><div class="metric"><span>Hints</span><strong>${attempt.hintsUsed}</strong></div></div><p>${status === "Revisit" ? "This idea needs another explanation and another try. That is useful information, not a failure." : status === "Developing" ? "The idea is taking shape. A later review will help it stick." : "The skill was secure in today’s questions. A later review is still needed for durable mastery."}</p><div class="button-row"><button class="primary" data-route="home">See next step</button><button class="secondary" data-route="parent">Parent view</button></div></div></section>`;
   focusMain();
+  if (status === "Secure today") celebrate();
+  else if (status === "Developing") { chime("correct"); confettiBurst({ y: innerHeight * 0.4, count: 20 }); }
 }
 
 function renderParent() {
@@ -187,8 +198,18 @@ document.addEventListener("click", e => {
   if(e.target.closest("[data-hint]")){showHint();return;}
   const check=e.target.closest("[data-check]"); if(check){check.dataset.next ? nextQuestion() : checkAnswer();return;}
   const confidence=e.target.closest("[data-confidence]"); if(confidence){finishSession(confidence.dataset.confidence);return;}
+  const soundBtn=e.target.closest("[data-sound-toggle]"); if(soundBtn){const on=toggleSound();syncSoundButton(soundBtn,on);return;}
   if(e.target.closest("[data-print]")){window.print();return;}
   if(e.target.closest("[data-reset]") && confirm("Remove every local Pathfinder attempt from this browser?")){localStorage.removeItem(STORAGE_KEY);renderParent();}
 });
 
+function syncSoundButton(btn, on){
+  btn.textContent = on ? "🔊" : "🔇";
+  btn.setAttribute("aria-pressed", String(on));
+  btn.setAttribute("aria-label", on ? "Sound on" : "Sound off");
+}
+
+initAmbient();
+const initialSoundBtn=document.querySelector("[data-sound-toggle]");
+if(initialSoundBtn) syncSoundButton(initialSoundBtn, isSoundOn());
 renderHome();
